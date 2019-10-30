@@ -4,7 +4,6 @@ int main()
 {
     FILE *inputFP, *outputFP;
     char c;
-    int i = 0;
 
     bool firstFlag = false;      // 有没有遇到第一个 「/」
     bool secondFlag = false;     // 有没有遇到第二个 「/」
@@ -53,13 +52,17 @@ int main()
         }
         if (secondFlag) //  遇到 「//」的情况
         {
-            if (c != '\n') // 不是回车就跳过
+            while ((c = fgetc(inputFP)) != EOF)
             {
-                continue;
-            }
-            else
-            {
-                secondFlag = false; // 是回车就跳出判断
+                if (c != '\n') // 不是回车就跳过
+                {
+                    continue;
+                }
+                else
+                {
+                    secondFlag = false; // 是回车就跳出判断
+                    break;
+                }
             }
         }
         if (firstStarFlag) // 遇到「/*」的情况
